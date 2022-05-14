@@ -21,14 +21,22 @@ import os
 import pathlib
 import sys
 
-ACCESS_KEY_ID = ""
-SECRET_ACCESS_KEY = ""
-HOST = ""
+"""
+ACCESS_KEY_ID = "W6Z1GT81G2RKJ9M3NUUT"
+SECRET_ACCESS_KEY = "RBoam7RGXXYBEWvCXCDqNT7lBFC0giw9LlAhh2Hk"
+HOST = "ssc-vm-g3-rhev4-2905.colo.seagate.com"
 PORT = 8000
+"""
 
-TEST_USER_NAME = 'rgwadmintest'
-TEST_USER_DISPLAY_NAME = 'RGW admin test user'
-TEST_USER_EMAIL = 'rgwadmintestuser@test.com'
+#admin user credendials rgw
+ACCESS_KEY_ID = "sgiamadmin"
+SECRET_ACCESS_KEY = "ldapadmin"
+HOST = "ssc-vm-g2-rhev4-3185.colo.seagate.com"
+PORT = 30080
+
+TEST_USER_NAME = 'testrgw'
+TEST_USER_DISPLAY_NAME = 'test user'
+TEST_USER_EMAIL = 'rgwadmintestuser1@test.com'
 
 
 async def create_user() -> Tuple[HTTPStatus, Dict[str, Any]]:
@@ -43,7 +51,7 @@ async def create_user() -> Tuple[HTTPStatus, Dict[str, Any]]:
         ACCESS_KEY_ID, SECRET_ACCESS_KEY, HOST, PORT, tls_enabled=False)
     user_params = {
         'display-name': TEST_USER_DISPLAY_NAME,
-        'email': TEST_USER_EMAIL,
+        #'email': TEST_USER_EMAIL,
         'uid': TEST_USER_NAME,
     }
     status, body = await rgwcli.signed_http_request(
@@ -62,4 +70,4 @@ if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
     status, user_info = loop.run_until_complete(create_user())
-    print(f"{status}: {user_info}")
+    print(f'{status} :: {user_info}')
